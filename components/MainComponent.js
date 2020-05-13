@@ -3,6 +3,8 @@ import Menu from './MenuComponent';
 import Dishdetail from './DishdetailComponent';
 import { View, Platform } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
+import Constants from 'expo-constants';
+
 
 import { DISHES } from '../shared/dishes';
 
@@ -28,7 +30,7 @@ class Main extends Component {
   
 	render() {
 		return (
-			<View style={{flex:1, paddingTop: Platform.OS === 'ios' ? 0 : 5}}> //Expo.Constants.statusBarHeight }}>
+			<View style={{flex:1, paddingTop: Platform.OS === 'ios' ? 0 : Constants.statusBarHeight }}>
 				<MenuNavigator />
 			</View>
 		);
