@@ -7,6 +7,7 @@ import Constants from 'expo-constants';
 import { Icon } from 'react-native-elements';
 
 import Home from './HomeComponent';
+import ContactUs from './ContactComponent';
 
 const MenuNavigator = createStackNavigator({
         Menu: { screen: Menu },
@@ -40,6 +41,20 @@ const HomeNavigator = createStackNavigator({
     })
 });
 
+const ContactUsNavigator = createStackNavigator({
+    ContactUs: { screen: ContactUs }
+  }, {
+    navigationOptions: ({ navigation }) => ({
+      headerStyle: {
+          backgroundColor: "#512DA8"
+      },
+      headerTitleStyle: {
+          color: "#fff"            
+      },
+      headerTintColor: "#fff"  
+    })
+});
+
 const MainNavigator = createDrawerNavigator({
     Home: 
       { screen: HomeNavigator,
@@ -53,6 +68,13 @@ const MainNavigator = createDrawerNavigator({
         navigationOptions: {
           title: 'Menu',
           drawerLabel: 'Menu'
+        }, 
+      },
+    ContactUs: 
+      { screen: ContactUsNavigator,
+        navigationOptions: {
+          title: 'Contact Us',
+          drawerLabel: 'Contact Us'
         }, 
       }
 }, {
