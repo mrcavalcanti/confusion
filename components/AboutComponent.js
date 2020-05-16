@@ -2,14 +2,20 @@ import React, { Component } from 'react';
 import { Text, ScrollView, View, StyleSheet, FlatList } from 'react-native';
 import { Card, Divider, ListItem } from 'react-native-elements';
 import { ABOUTUS } from '../shared/aboutus';
-import { LEADERS } from '../shared/leaders';
+import { connect } from 'react-redux';
+import { baseUrl } from '../shared/baseUrl';
 
+const mapStateToProps = state => {
+	return {
+		leaders: state.leaders
+	}
+}
+  
 class AboutUs extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          aboutus: ABOUTUS,
-		  leaders: LEADERS
+          aboutus: ABOUTUS
         };
     }
 	
@@ -20,7 +26,7 @@ class AboutUs extends Component {
     render() {
 		const aboutUs = this.state.aboutus;
 		
-		const renderMenuItem = ({item, index}) => {
+		const renderLeader = ({item, index}) => {
 
 			return (
 					<ListItem
@@ -28,18 +34,14 @@ class AboutUs extends Component {
 						title={item.name}
 						subtitle={item.description}
 						hideChevron={true}
-						leftAvatar={{ source: require('./images/alberto.png')}}
+						leftAvatar={{source: {uri: baseUrl + item.image}}}
 					  />
 			);
 		};
 		
         return(
             <View>
-                <Card
-                    featuredTitle={
-						<Text>{aboutUs[0].title}</Text>
-					}
-					>
+                <Card>
                      <Text style={styles.titleText}>
                         {aboutUs[0].title}
 					</Text>
@@ -49,18 +51,14 @@ class AboutUs extends Component {
 					</Text>
                 </Card>
 				
-                <Card
-                    featuredTitle={
-						<Text>Corporate Leadership</Text>
-					}
-					>
+                <Card>
                      <Text style={styles.titleText}>
                         Corporate Leadership
 					</Text>
 					<Divider style={{ backgroundColor: 'silver' }} />
 					<FlatList 
-						data={this.state.leaders}
-						renderItem={renderMenuItem}
+						data={this.props.leaders.leaders}
+						renderItem={renderLeader}
 						keyExtractor={item => item.id.toString()}
 						/>
 				</Card>
@@ -85,4 +83,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AboutUs;
+export default connect(mapStateToProps)(AboutUs);

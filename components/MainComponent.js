@@ -10,6 +10,25 @@ import Home from './HomeComponent';
 import ContactUs from './ContactComponent';
 import AboutUs from './AboutComponent';
 
+import { connect } from 'react-redux';
+import { fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
+
+const mapStateToProps = state => {
+  return {
+    dishes: state.dishes,
+    comments: state.comments,
+    promotions: state.promotions,
+    leaders: state.leaders
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  fetchDishes: () => dispatch(fetchDishes()),
+  fetchComments: () => dispatch(fetchComments()),
+  fetchPromos: () => dispatch(fetchPromos()),
+  fetchLeaders: () => dispatch(fetchLeaders()),
+})
+
 const MenuNavigator = createStackNavigator({
         Menu: { screen: Menu, 
             navigationOptions: ({ navigation }) => ({
@@ -169,6 +188,12 @@ const MainNavigator = createDrawerNavigator({
 });
 
 class Main extends Component {
+	componentDidMount() {
+		this.props.fetchDishes();
+		this.props.fetchComments();
+		this.props.fetchPromos();
+		this.props.fetchLeaders();
+	}
   
 	render() {
 		return (
@@ -203,4 +228,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Main;
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
