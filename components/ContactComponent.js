@@ -20,11 +20,7 @@ class ContactUs extends Component {
 		
         return(
             <View>
-                <Card
-                    featuredTitle={
-						<Text>Contact Information</Text>
-					}
-					>
+                <Card>
                      <Text style={styles.titleText}>
                         Contact Information
 					</Text>

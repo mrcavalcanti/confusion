@@ -4,6 +4,7 @@ import { Card, Divider, ListItem } from 'react-native-elements';
 import { ABOUTUS } from '../shared/aboutus';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
+import { Loading } from './LoadingComponent';
 
 const mapStateToProps = state => {
 	return {
@@ -27,43 +28,65 @@ class AboutUs extends Component {
 		const aboutUs = this.state.aboutus;
 		
 		const renderLeader = ({item, index}) => {
-
 			return (
 					<ListItem
 						key={index}
 						title={item.name}
 						subtitle={item.description}
+						subtitleNumberOfLines={15}
 						hideChevron={true}
 						leftAvatar={{source: {uri: baseUrl + item.image}}}
 					  />
 			);
 		};
 		
-        return(
-            <View>
-                <Card>
-                     <Text style={styles.titleText}>
-                        {aboutUs[0].title}
-					</Text>
-					<Divider style={{ backgroundColor: 'silver' }} />
-                     <Text style={styles.baseTextStrong}>
-                        {aboutUs[0].history}
-					</Text>
-                </Card>
-				
-                <Card>
-                     <Text style={styles.titleText}>
-                        Corporate Leadership
-					</Text>
-					<Divider style={{ backgroundColor: 'silver' }} />
-					<FlatList 
-						data={this.props.leaders.leaders}
-						renderItem={renderLeader}
-						keyExtractor={item => item.id.toString()}
-						/>
-				</Card>
-            </View>
-        );
+        if (this.props.leaders.isLoading) {
+            return(
+                <ScrollView>
+                    <Card
+                        title='Corporate Leadership'>
+                        <Loading />
+                    </Card>
+                </ScrollView>
+            );
+        }
+        else if (this.props.leaders.errMess) {
+            return(
+                <ScrollView>
+                    <Card
+                        title='Corporate Leadership'>
+                        <Text>{this.props.leaders.errMess}</Text>
+                    </Card>
+                </ScrollView>
+            );
+        }
+        else {
+			return(
+				<ScrollView>
+					<Card>
+						 <Text style={styles.titleText}>
+							{aboutUs[0].title}
+						</Text>
+						<Divider style={{ backgroundColor: 'silver' }} />
+						 <Text style={styles.baseTextStrong}>
+							{aboutUs[0].history}
+						</Text>
+					</Card>
+					
+					<Card>
+						 <Text style={styles.titleText}>
+							Corporate Leadership
+						</Text>
+						<Divider style={{ backgroundColor: 'silver' }} />
+						<FlatList 
+							data={this.props.leaders.leaders}
+							renderItem={renderLeader}
+							keyExtractor={item => item.id.toString()}
+							/>
+					</Card>
+				</ScrollView>
+			);
+		}
     }
 }
 
