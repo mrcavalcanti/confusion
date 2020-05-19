@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, ScrollView, View, StyleSheet } from 'react-native';
 import { Card, Divider } from 'react-native-elements';
 import { CONTACTUS } from '../shared/contactus';
+import * as Animatable from 'react-native-animatable';
 
 class ContactUs extends Component {
     constructor(props) {
@@ -20,30 +21,32 @@ class ContactUs extends Component {
 		
         return(
             <View>
-                <Card>
-                     <Text style={styles.titleText}>
-                        Contact Information
-					</Text>
-					<Divider style={{ backgroundColor: 'silver' }} />
-                     <Text style={styles.baseText}>
-                        {contactUs[0].address}
-					</Text>
-                     <Text style={styles.baseText}>
-                        {contactUs[0].location}
-					</Text>
-                     <Text style={styles.baseText}>
-                        {contactUs[0].city}
-					</Text>
-                     <Text style={styles.baseText}>
-                        {contactUs[0].phone}
-					</Text>
-                     <Text style={styles.baseText}>
-                        {contactUs[0].phoneFax}
-					</Text>
-                     <Text style={styles.baseText}>
-                        {contactUs[0].email}
-					</Text>
-                </Card>
+				<Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
+					<Card>
+						 <Text style={styles.titleText}>
+							Contact Information
+						</Text>
+						<Divider style={{ backgroundColor: 'silver' }} />
+						 <Text style={styles.baseText}>
+							{contactUs[0].address}
+						</Text>
+						 <Text style={styles.baseText}>
+							{contactUs[0].location}
+						</Text>
+						 <Text style={styles.baseText}>
+							{contactUs[0].city}
+						</Text>
+						 <Text style={styles.baseText}>
+							{contactUs[0].phone}
+						</Text>
+						 <Text style={styles.baseText}>
+							{contactUs[0].phoneFax}
+						</Text>
+						 <Text style={styles.baseText}>
+							{contactUs[0].email}
+						</Text>
+					</Card>
+				</Animatable.View>
             </View>
         );
     }
