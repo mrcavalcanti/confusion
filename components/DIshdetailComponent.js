@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, ScrollView, View, FlatList, Modal, Button, StyleSheet, Alert, PanResponder } from 'react-native';
+import { Text, ScrollView, View, FlatList, Modal, Button, StyleSheet, Alert, PanResponder, Share } from 'react-native';
 import { Card, Icon, Rating, Input } from 'react-native-elements';
 
 import { postFavorite, postComment } from '../redux/ActionCreators';
@@ -69,6 +69,16 @@ function RenderDish(props) {
         }
     })
 	
+    const shareDish = (title, message, url) => {
+        Share.share({
+            title: title,
+            message: title + ': ' + message + ' ' + url,
+            url: url
+        },{
+            dialogTitle: 'Share ' + title
+        })
+    }
+	
 	if (dish != null) {
 		return(
 			<Animatable.View animation="fadeInDown" duration={2000} delay={1000} ref={this.handleViewRef} {...panResponder.panHandlers}>
@@ -81,6 +91,14 @@ function RenderDish(props) {
 					<View style={{ flex: 1, flexDirection: 'row', alignItems: 'center',	justifyContent: 'center' }}>
 						<Icon raised reverse name={ props.favorite ? 'heart' : 'heart-o'} type='font-awesome' color='#f50' onPress={() => props.favorite ? console.log('Already favorite') : props.onPress()} />
 						<Icon raised reverse name={ 'pencil' } type='font-awesome' color='#512DA8' onPress={() => props.onPressHandleReservation()}	/>
+                        <Icon
+                            raised
+                            reverse
+                            name='share'
+                            type='font-awesome'
+                            color='#51D2A8'
+                            style={styles.cardItem}
+                            onPress={() => shareDish(dish.name, dish.description, baseUrl + dish.image)} />
 					</View>
 				</Card>
 			</Animatable.View>
