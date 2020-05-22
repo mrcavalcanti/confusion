@@ -7,6 +7,7 @@ import * as Animatable from 'react-native-animatable';
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 import * as SMS from 'expo-sms';
+import * as Calendar from 'expo-calendar';
 
 class Reservation extends Component {
 
@@ -42,6 +43,7 @@ class Reservation extends Component {
 					text: 'OK',
 					onPress: () => { 
 						this.presentLocalNotification(this.state.date)
+						this.addReservationToCalendar(this.state.date)
 						this.resetForm()
 					},
 				}
@@ -49,7 +51,7 @@ class Reservation extends Component {
 			{ cancelable: false }
 		);		
     }
-
+	
     resetForm() {
         this.setState({
             guests: 1,
@@ -58,6 +60,28 @@ class Reservation extends Component {
         });
     }
     
+	async obtainCalendarPermission() {
+        let calendarPermission = await Permissions.getAsync(Permissions.CALENDAR);
+        if (calendarPermission.status !== 'granted') {
+            calendarPermission = await Permissions.askAsync(Permissions.CALENDAR);
+            if (calendarPermission.status !== 'granted') {
+                Alert.alert('Permission not granted to calendar');
+            }
+        }
+        return calendarPermission;
+	}
+	
+	async addReservationToCalendar(date) {
+		await this.obtainCalendarPermission();
+		Calendar.createEventAsync(id, {
+			title: 'Con Fusion Table Reserve',
+			startDate: new Date(Date.parse(date)),
+			endDate: new Date(Date.parse(date) + (2 * 60 * 60 * 1000)),
+			timeZone: 'Asia/Hong_Kong',
+			location: '121, Clear Water bay Road, Clear Water Bay, Kowloon, Hong Kong'
+		});
+	}
+	
     async obtainNotificationPermission() {
         let permission = await Permissions.getAsync(Permissions.USER_FACING_NOTIFICATIONS);
         if (permission.status !== 'granted') {

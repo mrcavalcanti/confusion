@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, Platform, Text, ScrollView, Image, StyleSheet, ToastAndroid, NetInfo } from 'react-native';
+import { View, Platform, Text, ScrollView, Image, StyleSheet, ToastAndroid } from 'react-native';
 import { createStackNavigator, createDrawerNavigator, DrawerItems, SafeAreaView } from 'react-navigation';
 import Constants from 'expo-constants';
 import { Icon } from 'react-native-elements';
+import NetInfo from "@react-native-community/netinfo";
 
 import Menu from './MenuComponent';
 import Dishdetail from './DishdetailComponent';
@@ -293,18 +294,17 @@ class Main extends Component {
 		this.props.fetchPromos();
 		this.props.fetchLeaders();
 			
-		NetInfo.getConnectionInfo()
+		NetInfo.fetch()
 			.then((connectionInfo) => {
-				ToastAndroid.show('Initial Network Connectivity Type: '
-					+ connectionInfo.type + ', effectiveType: ' + connectionInfo.effectiveType,
+				ToastAndroid.show('Initial Network Connectivity Type: '	+ connectionInfo.type,
 					ToastAndroid.LONG)
 			});
 
-		NetInfo.addEventListener('connectionChange', this.handleConnectivityChange);
+		NetInfo.addEventListener(this.handleConnectivityChange);
 	}
   
 	componentWillUnmount() {
-		NetInfo.removeEventListener('connectionChange', this.handleConnectivityChange);
+		//NetInfo.removeEventListener(this.handleConnectivityChange);
 	}
     
 	handleConnectivityChange = (connectionInfo) => {
