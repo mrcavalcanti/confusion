@@ -8,77 +8,77 @@ import * as MailComposer from 'expo-mail-composer';
 
 
 class ContactUs extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-          contactus: CONTACTUS,
-        };
-    }
-	
-    static navigationOptions = {
-        title: 'Contact Us'
-    };
+	constructor(props) {
+		super(props);
+		this.state = {
+			contactus: CONTACTUS,
+		};
+	}
 
-    sendMail() {
-        MailComposer.composeAsync({
-            recipients: ['confusion@food.net'],
-            subject: 'Enquiry',
-            body: 'To whom it may concern:'
-        })
-    }
-	
-    render() {
+	static navigationOptions = {
+		title: 'Contact Us'
+	};
+
+	sendMail() {
+		MailComposer.composeAsync({
+			recipients: ['confusion@food.net'],
+			subject: 'Enquiry',
+			body: 'To whom it may concern:'
+		})
+	}
+
+	render() {
 		const contactUs = this.state.contactus;
-		
-        return(
-            <View>
+
+		return (
+			<View>
 				<Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
 					<Card>
-						 <Text style={styles.titleText}>
+						<Text style={styles.titleText}>
 							Contact Information
 						</Text>
 						<Divider style={{ backgroundColor: 'silver' }} />
-						 <Text style={styles.baseText}>
+						<Text style={styles.baseText}>
 							{contactUs[0].address}
 						</Text>
-						 <Text style={styles.baseText}>
+						<Text style={styles.baseText}>
 							{contactUs[0].location}
 						</Text>
-						 <Text style={styles.baseText}>
+						<Text style={styles.baseText}>
 							{contactUs[0].city}
 						</Text>
-						 <Text style={styles.baseText}>
+						<Text style={styles.baseText}>
 							{contactUs[0].phone}
 						</Text>
-						 <Text style={styles.baseText}>
+						<Text style={styles.baseText}>
 							{contactUs[0].phoneFax}
 						</Text>
-						 <Text style={styles.baseText}>
+						<Text style={styles.baseText}>
 							{contactUs[0].email}
 						</Text>
 						<Button
 							title="Send Email"
-							buttonStyle={{backgroundColor: "#512DA8"}}
+							buttonStyle={{ backgroundColor: "#512DA8" }}
 							icon={<Icon name='envelope-o' type='font-awesome' color='white' />}
 							onPress={this.sendMail}
-                        />
+						/>
 					</Card>
 				</Animatable.View>
-            </View>
-        );
-    }
+			</View>
+		);
+	}
 }
 
 const styles = StyleSheet.create({
-  baseText: {
-    margin: 10
-  },
-  titleText: {
-    fontSize: 20,
-    fontWeight: "bold",
-	textAlign: "center",
-	margin: 10
-  }
+	baseText: {
+		margin: 10
+	},
+	titleText: {
+		fontSize: 20,
+		fontWeight: "bold",
+		textAlign: "center",
+		margin: 10
+	}
 });
 
 export default ContactUs;

@@ -12,103 +12,103 @@ const mapStateToProps = state => {
 		leaders: state.leaders
 	}
 }
-  
-class AboutUs extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-          aboutus: ABOUTUS
-        };
-    }
-	
-    static navigationOptions = {
-        title: 'About Us'
-    };
 
-    render() {
+class AboutUs extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			aboutus: ABOUTUS
+		};
+	}
+
+	static navigationOptions = {
+		title: 'About Us'
+	};
+
+	render() {
 		const aboutUs = this.state.aboutus;
-		
-		const renderLeader = ({item, index}) => {
+
+		const renderLeader = ({ item, index }) => {
 			return (
-					<ListItem
-						key={index}
-						title={item.name}
-						subtitle={item.description}
-						subtitleNumberOfLines={15}
-						hideChevron={true}
-						leftAvatar={{source: {uri: baseUrl + item.image}}}
-					  />
+				<ListItem
+					key={index}
+					title={item.name}
+					subtitle={item.description}
+					subtitleNumberOfLines={15}
+					hideChevron={true}
+					leftAvatar={{ source: { uri: baseUrl + item.image } }}
+				/>
 			);
 		};
-		
-        if (this.props.leaders.isLoading) {
-            return(
-                <ScrollView>
-                    <Card
-                        title='Corporate Leadership'>
-                        <Loading />
-                    </Card>
-                </ScrollView>
-            );
-        }
-        else if (this.props.leaders.errMess) {
-            return(
-                <ScrollView>
-                    <Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
+
+		if (this.props.leaders.isLoading) {
+			return (
+				<ScrollView>
+					<Card
+						title='Corporate Leadership'>
+						<Loading />
+					</Card>
+				</ScrollView>
+			);
+		}
+		else if (this.props.leaders.errMess) {
+			return (
+				<ScrollView>
+					<Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
 						<Card
 							title='Corporate Leadership'>
 							<Text>{this.props.leaders.errMess}</Text>
 						</Card>
 					</Animatable.View>
-                </ScrollView>
-            );
-        }
-        else {
-			return(
+				</ScrollView>
+			);
+		}
+		else {
+			return (
 				<ScrollView>
 					<Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
 						<Card>
-							 <Text style={styles.titleText}>
+							<Text style={styles.titleText}>
 								{aboutUs[0].title}
 							</Text>
 							<Divider style={{ backgroundColor: 'silver' }} />
-							 <Text style={styles.baseTextStrong}>
+							<Text style={styles.baseTextStrong}>
 								{aboutUs[0].history}
 							</Text>
 						</Card>
-						
+
 						<Card>
-							 <Text style={styles.titleText}>
+							<Text style={styles.titleText}>
 								Corporate Leadership
 							</Text>
 							<Divider style={{ backgroundColor: 'silver' }} />
-							<FlatList 
+							<FlatList
 								data={this.props.leaders.leaders}
 								renderItem={renderLeader}
 								keyExtractor={item => item.id.toString()}
-								/>
+							/>
 						</Card>
 					</Animatable.View>
 				</ScrollView>
 			);
 		}
-    }
+	}
 }
 
 const styles = StyleSheet.create({
-  baseText: {
-    margin: 10
-  },
-  baseTextStrong: {
-    margin: 10,
-	fontWeight: "bold"
-  },
-  titleText: {
-    fontSize: 20,
-    fontWeight: "bold",
-	textAlign: "center",
-	margin: 10
-  }
+	baseText: {
+		margin: 10
+	},
+	baseTextStrong: {
+		margin: 10,
+		fontWeight: "bold"
+	},
+	titleText: {
+		fontSize: 20,
+		fontWeight: "bold",
+		textAlign: "center",
+		margin: 10
+	}
 });
 
 export default connect(mapStateToProps)(AboutUs);
